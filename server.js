@@ -32,7 +32,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const authenticateUser = (req, res, next) => {
     const token = req.headers.authorization?.split(' ')[1];
