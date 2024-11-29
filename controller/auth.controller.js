@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import expressAsyncHandler from 'express-async-handler';
 const asyncHandler = expressAsyncHandler;
 
-// Register new user
 export const register = asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
 
