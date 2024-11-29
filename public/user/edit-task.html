@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2 style="text-align: center; margin-bottom: 2rem;">Edit Task</h2>
+        <form id="editTaskForm">
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description" required>
+            </div>
+            <div class="form-group">
+                <label for="progress">Progress</label>
+                <input type="text" id="progress" name="progress" placeholder="e.g., 25%" required>
+            </div>
+            <div class="form-group">
+                <label for="endDate">Expected End Date</label>
+                <input type="date" id="endDate" name="endDate" required>
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration (hours)</label>
+                <input type="number" id="duration" name="duration" required>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" name="status" required>
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn btn-save">Save Changes</button>
+                <button type="button" class="btn btn-cancel" onclick="window.location.href='index.html'">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get task ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const taskId = urlParams.get('id');
+            console.log('Task ID from URL:', taskId);
+
+            // Get task data from localStorage
+            const taskData = localStorage.getItem('taskToEdit');
+            console.log('Task data from localStorage:', taskData);
+            
+            if (taskData) {
+                const task = JSON.parse(taskData);
+                console.log('Parsed task:', task);
+
+                // Store the task ID in a hidden input
+                const form = document.getElementById('editTaskForm');
+                if (!form.querySelector('#taskId')) {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.id = 'taskId';
+                    hiddenInput.value = taskId;
+                    form.appendChild(hiddenInput);
+                }
+
+                // Populate form fields
+                document.getElementById('description').value = task.description || '';
+                document.getElementById('progress').value = task.progress || '0';
+                document.getElementById('endDate').value = task.endDate ? task.endDate.split('T')[0] : '';
+                document.getElementById('duration').value = task.duration || '0';
+                document.getElementById('status').value = task.status || 'pending';
+            }
+
+            document.getElementById('editTaskForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const taskId = document.getElementById('taskId').value;
+                if (!taskId) {
+                    console.error('No task ID found');
+                    alert('Invalid task ID');
+                    return;
+                }
+
+                const updatedTask = {
+                    id: taskId,
+                    _id: taskId,
+                    description: document.getElementById('description').value,
+                    progress: document.getElementById('progress').value,
+                    endDate: document.getElementById('endDate').value,
+                    duration: document.getElementById('duration').value,
+                    status: document.getElementById('status').value
+                };
+
+                console.log('Saving updated task:', updatedTask);
+                localStorage.setItem('updatedTask', JSON.stringify(updatedTask));
+                
+                // Redirect back to the main page
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html> 

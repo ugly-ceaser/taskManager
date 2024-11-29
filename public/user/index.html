@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management - User Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/js/tasks.js" defer></script>
+    <script src="../assets/js/index.js" defer></script>
+</head>
+<body>
+    <div class="task-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2 style="margin: 0;">My Tasks</h2>
+            <button class="btn btn-logout" onclick="logout()">Logout</button>
+        </div>
+        
+        <div style="margin-bottom: 1rem;">
+            <button class="btn btn-add" onclick="addNewTask()">Add New Task</button>
+        </div>
+        
+        <table class="task-list">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Progress</th>
+                    <th>Date Created</th>
+                    <th>Expected End Date</th>
+                    <th>Duration (hours)</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="taskTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <div id="addTaskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Add New Task</h3>
+            <form id="addTaskForm">
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">Expected End Date:</label>
+                    <input type="date" id="endDate" name="endDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration (hours):</label>
+                    <input type="number" id="duration" name="duration" required min="0">
+                </div>
+                <button type="submit" class="btn btn-add">Add Task</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
